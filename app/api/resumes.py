@@ -53,7 +53,10 @@ async def upload_resume(file: UploadFile = File(...), db: Session = Depends(get_
 
         link_skills_to_candidate(db, candidate.id, parsed["skills"])
 
-    except Exception:
+    except Exception as e:
+        import traceback
+        print(f"PARSING ERROR: {e}")
+        traceback.print_exc()
         candidate.upload_status = UploadStatus.failed
 
     db.commit()
